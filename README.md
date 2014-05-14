@@ -1,6 +1,7 @@
 #The Small World Made Tangible
 
 In this exercise, we:
+
 1. take tiny creatures in the world; viruses, insects, plant seeds, etc.
 2. scan them with fancy tools (like SEM or microCT, depending on scale)
 3. distinguish different features from the scans (look inside the things!)
