@@ -11,9 +11,11 @@ Wow, that sounds like a blast, and we might even learn a thing or two.
 Let's get started.
 
 Because I am crazy, we are going to try using Julia to express our ideas.
-First thing's first. Let's find a critter!
 
-How about:
+Getting Started:
 
-1. [http://www.ebi.ac.uk/pdbe/entry/EMD-5855/downloads](Chlamydomonas axoneme)
-2. Okay, let's turn that map (really, mrc) file into something we can do computation on!
+Let's use ipython notebooks:
+
+```
+ipython notebook --profile=julia
+```
