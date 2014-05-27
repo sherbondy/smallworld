@@ -129,6 +129,49 @@ t2_size = size(T2_data);
 ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 ventricle_mask[T2_data .> 0.6] = 1;
 
+
+function write_binvox(voxel_model, fname)
+    # takes a 3d array of binary voxel data and a filename as input
+    fp = open(fname, "w");
+
+    vsize = size(voxel_model);
+    voxels_flat = vec(voxel_model);
+
+    write(fp, "#binvox 1\n");
+    write(fp, "dim $(vsize[1]) $(vsize[2]) $(vsize[3])\n");
+    write(fp, "translate 0 0 0\n");
+    write(fp, "scale 1\n");
+    write(fp, "data\n");
+
+    state = voxels_flat[1];
+    ctr = 0;
+    for c in voxels_flat
+        if c == state
+            ctr += 1
+            if ctr == 255
+                write(fp, uint8(state))
+                write(fp, uint8(ctr))
+            end
+        else
+            write(fp, uint8(state))
+            write(fp, uint8(ctr))
+            state = c
+            ctr = 1
+        end
+    end
+    if ctr > 0
+        write(fp, uint8(state))
+        write(fp, uint8(ctr))
+    end
+
+    close(fp)
+end
+
+write_binvox(ventricle_mask, "test.binvox");
+
+#make a file from ventricle_mask, then call viewvox
+run(`./viewvox`)
+
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
 
