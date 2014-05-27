@@ -2,6 +2,7 @@ using NIfTI
 using ImageView, Images
 using DataFrames
 using Gadfly
+using Meshes
 
 function midpoint(val)
     convert(Int, val/2 + 1)
@@ -129,7 +130,6 @@ t2_size = size(T2_data);
 ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 ventricle_mask[T2_data .> 0.6] = 1;
 
-
 function write_binvox(voxel_model, fname)
     # takes a 3d array of binary voxel data and a filename as input
     fp = open(fname, "w")
@@ -191,3 +191,6 @@ max_label, max_pos = findmax(totals)
 
 refined_ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 refined_ventricle_mask(connected_components .== max_label) = 1;
+
+#mesh = isosurface(binary_brain_mask, 0x01, 0x00);
+#exportToStl(mesh, "test.stl");
