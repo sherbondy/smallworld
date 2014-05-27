@@ -168,10 +168,10 @@ function write_binvox(voxel_model, fname)
     close(fp)
 end
 
-test_cube = ones(Uint8, 64, 64, 64)
+#test_cube = ones(Uint8, 64, 64, 64)
 #make a file from ventricle_mask, then call viewvox
-write_binvox(test_cube, "test.binvox");
-run(`./viewvox test.binvox`)
+write_binvox(ventricle_mask, "ventricle1.binvox");
+#run(`./viewvox test.binvox`)
 
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
@@ -180,3 +180,14 @@ T1_masked_im = grayim(T1_masked);
 #erode(T1_masked_im)
 #dilate(T1_masked_im)
 #label_components(T1_masked_im)...
+
+#opening = erode -> dilate
+#not sure if the second arg to this is right...
+opened_mask = opening(ventricle_mask);
+connected_components = label_components(opened_mask);
+component_vec = vec(connected_components);
+labels, totals = hist(component_vec, 1);
+max_label, max_pos = findmax(totals)
+
+refined_ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
+refined_ventricle_mask(connected_components .== max_label) = 1;
