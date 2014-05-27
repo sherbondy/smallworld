@@ -14,7 +14,6 @@ function normalized_niread(fname)
     raw_norm /= maximum(raw_norm)
 end
 
-
 function display_brain_centers(ni_data)
     ni_size = size(ni_data)
     center_slice_1 = squeeze(ni_data[midpoint(ni_size[1]),:,:], 1);
@@ -40,7 +39,8 @@ brain_mask_data = normalized_niread("samples/NC_03_mask_brain.nii");
 
 function masked_brain(brain_data, mask_data)
     brain_masked = copy(brain_data);
-    brain_masked[brain_masked_data .== 0] = 0;
+    brain_masked[mask_data .== 0] = 0;
+    brain_masked
 end
 
 # Mask T1 to only include the brain
@@ -83,17 +83,24 @@ T1_wm_masked = masked_brain(T1_data, wm_mask_data);
 T1_csf_masked = masked_brain(T1_data, csf_mask_data);
 
 function nonzero_overlay_histogram(brains, labels)
-    # takes a vector of mri data vectors and corresponding labels as inputs
+    # takes a {} vector of mri data vectors
+    # and a tuple/vector of corresponding labels as inputs
     all_intensities = []
     all_labels = []
-    for i:length(labels)
+    for i = 1:length(labels)
         brain_1d = nonzero_1d_data(brains[i]);
         all_intensities = vcat(all_intensities, brain_1d)
         all_labels = vcat(all_labels, [labels[i] for _ in brain_1d])
     end
 
     df = DataFrame(Intensity = all_intensities, Label = all_labels)
+    plot(df, x="Intensity", color="Label",
+         Geom.histogram(bincount=10),
+         Guide.xlabel("Intensity"), Guide.ylabel("Voxel Count"))
 end
+
+nonzero_overlay_histogram({T1_gm_masked, T1_wm_masked, T1_csf_masked},
+                          ("GM", "WM", "CSF"));
 
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
