@@ -123,7 +123,11 @@ p_flair = nonzero_overlay_histogram(FLAIR_masked_brains, mask_titles)
 
 t2_csf = T2_masked_brains[3];
 t2_nonzero_csf = nonzero_1d_data(t2_csf);
-plot(x=t2_nonzero_csf, Geom.histogram(bincount=10))
+plot(x=t2_nonzero_csf, Geom.histogram(bincount=10));
+
+t2_size = size(T2_data);
+ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
+ventricle_mask[T2_data .> 0.6] = 1;
 
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
