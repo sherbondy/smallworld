@@ -78,9 +78,11 @@ gm_mask_data = normalized_niread("samples/NC_03_mask_GM.nii");
 wm_mask_data = normalized_niread("samples/NC_03_mask_WM.nii");
 csf_mask_data = normalized_niread("samples/NC_03_mask_CSF.nii");
 
-T1_gm_masked = masked_brain(T1_data, gm_mask_data);
-T1_wm_masked = masked_brain(T1_data, wm_mask_data);
-T1_csf_masked = masked_brain(T1_data, csf_mask_data);
+mask_titles = ("GM", "WM", "CSF");
+mask_array = {gm_mask_data, wm_mask_data, csf_mask_data};
+
+T1_masked_brains = map((mask_data)-> masked_brain(T1_data, mask_data),
+                       mask_array);
 
 function nonzero_overlay_histogram(brains, labels)
     # takes a {} vector of mri data vectors
@@ -99,8 +101,29 @@ function nonzero_overlay_histogram(brains, labels)
          Guide.xlabel("Intensity"), Guide.ylabel("Voxel Count"))
 end
 
-nonzero_overlay_histogram({T1_gm_masked, T1_wm_masked, T1_csf_masked},
-                          ("GM", "WM", "CSF"));
+p_t1 = nonzero_overlay_histogram(T1_masked_brains, mask_titles)
+
+
+#T2
+
+T2_data = normalized_niread("samples/NC_03_T2.nii");
+T2_masked_brains = map((mask_data)-> masked_brain(T2_data, mask_data),
+                       mask_array);
+
+p_t2 = nonzero_overlay_histogram(T2_masked_brains, mask_titles)
+
+
+#FLAIR
+
+FLAIR_data = normalized_niread("samples/NC_03_FLAIR.nii");
+FLAIR_masked_brains = map((mask_data)-> masked_brain(FLAIR_data, mask_data),
+                          mask_array);
+
+p_flair = nonzero_overlay_histogram(FLAIR_masked_brains, mask_titles)
+
+t2_csf = T2_masked_brains[3];
+t2_nonzero_csf = nonzero_1d_data(t2_csf);
+plot(x=t2_nonzero_csf, Geom.histogram(bincount=10))
 
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
