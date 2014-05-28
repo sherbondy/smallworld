@@ -203,12 +203,19 @@ edges, region_counts = hist(vec(connected_components), 1:13);
 sorted_regions = sort(region_counts, rev=true);
 
 # the two largest regions should correspond to the ventricles!
-first_region = findfirst(region_counts, sorted_regions[1]);
-second_region = findfirst(region_counts, sorted_regions[2]);
+# aww, shucks, it turns on that the first one was bogus...
+first_region = findfirst(region_counts, sorted_regions[2]);
+second_region = findfirst(region_counts, sorted_regions[3]);
 
 refined_ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 refined_ventricle_mask[connected_components .== first_region] = 1;
 refined_ventricle_mask[connected_components .== second_region] = 1;
+
+# now we can subtract the ventricles from the original brain mask
+hollowed_brain = brain_mask_data - refined_ventricle_mask;
+write_binvox(hollowed_brain, "hollowed_brain.binvox");
+
+write_binvox(refined_ventricle_mask, "ventricle_refined.binvox");
 
 #mesh = isosurface(binary_brain_mask, 0x01, 0x00);
 #exportToStl(mesh, "test.stl");
