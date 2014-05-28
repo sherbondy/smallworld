@@ -139,8 +139,10 @@ function write_binvox(voxel_model, fname)
     # takes a 3d array of binary voxel data and a filename as input
     fp = open(fname, "w")
 
-    vsize = size(voxel_model)
-    voxels_flat = vec(voxel_model)
+    voxel_model_xzy = permutedims(voxel_model, [1,3,2]);
+
+    vsize = size(voxel_model_xzy)
+    voxels_flat = vec(voxel_model_xzy)
 
     write(fp, "#binvox 1\n")
     write(fp, "dim $(vsize[1]) $(vsize[2]) $(vsize[3])\n")
@@ -173,11 +175,9 @@ function write_binvox(voxel_model, fname)
     close(fp)
 end
 
-ventricle_mask_xzy = permutedims(ventricle_mask, [1,3,2]);
-
 #test_cube = ones(Uint8, 64, 64, 64)
 #make a file from ventricle_mask, then call viewvox
-write_binvox(ventricle_mask_xzy, "ventricle1.binvox");
+write_binvox(ventricle_mask, "ventricle.binvox");
 #run(`./viewvox ventricle1.binvox`)
 
 #I should make a dataframe with columns for intensity and mask type
