@@ -207,8 +207,8 @@ first_region = findfirst(region_counts, sorted_regions[1]);
 second_region = findfirst(region_counts, sorted_regions[2]);
 
 refined_ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
-refined_ventricle_mask(connected_components .== first_region) = 1;
-refined_ventricle_mask(connected_components .== second_region) = 1;
+refined_ventricle_mask[connected_components .== first_region] = 1;
+refined_ventricle_mask[connected_components .== second_region] = 1;
 
 #mesh = isosurface(binary_brain_mask, 0x01, 0x00);
 #exportToStl(mesh, "test.stl");
