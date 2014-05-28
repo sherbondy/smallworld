@@ -32,7 +32,7 @@ end
 
 T1_data = normalized_niread("samples/NC_03_T1.nii");
 
-# size(ni)
+# size(T1_data)
 
 display_brain_centers(T1_data);
 
@@ -126,6 +126,11 @@ t2_csf = T2_masked_brains[3];
 t2_nonzero_csf = nonzero_1d_data(t2_csf);
 plot(x=t2_nonzero_csf, Geom.histogram(bincount=10));
 
+#let's try and put some numbers to how t2 csf looks!
+#mean(t2_nonzero_csf)
+#median(t2_nonzero_csf)
+#std(t2_nonzero_csf)
+
 t2_size = size(T2_data);
 ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 ventricle_mask[T2_data .> 0.6] = 1;
@@ -168,10 +173,12 @@ function write_binvox(voxel_model, fname)
     close(fp)
 end
 
+ventricle_mask_xzy = permutedims(ventricle_mask, [1,3,2]);
+
 #test_cube = ones(Uint8, 64, 64, 64)
 #make a file from ventricle_mask, then call viewvox
-write_binvox(ventricle_mask, "ventricle1.binvox");
-#run(`./viewvox test.binvox`)
+write_binvox(ventricle_mask_xzy, "ventricle1.binvox");
+#run(`./viewvox ventricle1.binvox`)
 
 #I should make a dataframe with columns for intensity and mask type
 #Then plot x="Intensity", color="Mask"
@@ -194,3 +201,5 @@ refined_ventricle_mask(connected_components .== max_label) = 1;
 
 #mesh = isosurface(binary_brain_mask, 0x01, 0x00);
 #exportToStl(mesh, "test.stl");
+
+#I think for binvox, my axes may be out of order. Maybe switch y and z?
