@@ -189,17 +189,26 @@ T1_masked_im = grayim(T1_masked);
 #label_components(T1_masked_im)...
 
 #opening = erode -> dilate
-#not sure if the second arg to this is right...
 opened_mask = opening(ventricle_mask);
-connected_components = label_components(opened_mask);
-component_vec = vec(connected_components);
-labels, totals = hist(component_vec, 1);
-max_label, max_pos = findmax(totals)
+write_binvox(opened_mask, "opened.binvox");
+
+# include neighbors and diagonals in connectivity check
+binary_opened_mask = convert(BitArray, opened_mask);
+
+connectivity = trues(3,3,3);
+connected_components = label_components(binary_opened_mask, connectivity);
+region_count = maximum(connected_components);
+edges, region_counts = hist(vec(connected_components), 1:13);
+
+sorted_regions = sort(region_counts, rev=true);
+
+# the two largest regions should correspond to the ventricles!
+first_region = findfirst(region_counts, sorted_regions[1]);
+second_region = findfirst(region_counts, sorted_regions[2]);
 
 refined_ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
-refined_ventricle_mask(connected_components .== max_label) = 1;
+refined_ventricle_mask(connected_components .== first_region) = 1;
+refined_ventricle_mask(connected_components .== second_region) = 1;
 
 #mesh = isosurface(binary_brain_mask, 0x01, 0x00);
 #exportToStl(mesh, "test.stl");
-
-#I think for binvox, my axes may be out of order. Maybe switch y and z?
