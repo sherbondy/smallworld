@@ -58,9 +58,11 @@ end
 # Fancy IJulia inline voxel plotting code
 
 const three_js = readall(joinpath(dirname(Base.source_path()), "js/three.min.js"))
+const trackball_js = readall(joinpath(dirname(Base.source_path()), "js/TrackballControls.js"))
 const voxel_js = readall(joinpath(dirname(Base.source_path()), "js/voxel.js"))
 const voxel_scripts = """<script type="text/javascript" charset="utf-8">
                           $(three_js)
+                          $(trackball_js)
                           $(voxel_js)
                          </script>"""
 
@@ -83,9 +85,12 @@ canvas_count = 0
 function display_voxels(voxel_model::VoxelArray)
   global canvas_count
   canvas_id = "voxel$(canvas_count)"
+  vs = size(voxel_model)
   display("text/html", """<div id="$(canvas_id)"></canvas>
                           <script charset="utf-8">
-                          VoxelGrid("$(canvas_id)", [10,10,10], [0]);
+                          VoxelGrid("$(canvas_id)",
+                          [$(vs[1]),$(vs[2]),$(vs[3])],
+                          [$(join(voxel_model, ","))]);
                           </script>""")
   canvas_count += 1
 end
