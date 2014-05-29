@@ -1,8 +1,13 @@
+# this is intended to be run interactively!
+
+using Binvox
 using NIfTI
 using ImageView, Images
 using DataFrames
 using Gadfly
 using Meshes
+
+## HELPER FUNCTIONS
 
 function midpoint(val)
     convert(Int, val/2 + 1)
@@ -15,6 +20,7 @@ function normalized_niread(fname)
     raw_norm /= maximum(raw_norm)
 end
 
+# display three side-by-side images of the center slices from a volume
 function display_brain_centers(ni_data)
     ni_size = size(ni_data)
     center_slice_1 = squeeze(ni_data[midpoint(ni_size[1]),:,:], 1);
@@ -29,36 +35,12 @@ function display_brain_centers(ni_data)
     return imgc
 end
 
-
-T1_data = normalized_niread("samples/NC_03_T1.nii");
-
-# size(T1_data)
-
-display_brain_centers(T1_data);
-
-brain_mask_data = normalized_niread("samples/NC_03_mask_brain.nii");
-
+# mask a volume with the provided mask, returning a new volume
 function masked_brain(brain_data, mask_data)
     brain_masked = copy(brain_data);
     brain_masked[mask_data .== 0] = 0;
     brain_masked
 end
-
-# Mask T1 to only include the brain
-T1_brain_masked = masked_brain(T1_data, brain_mask_data);
-canvas = display_brain_centers(T1_brain_masked);
-
-##If we are not in a REPL
-#if (!isinteractive())
-#    # Create a condition object
-#    c = Condition()
-#    # Get the main window (A Tk toplevel object)
-#    win = toplevel(canvas)
-#    # Notify the condition object when the window closes
-#    bind(win, "<Destroy>", e->notify(c))
-#    # Wait for the notification before proceeding ...
-#    wait(c)
-#end
 
 # convert voxel data to 1d array with 0-vales removed
 function nonzero_1d_data(voxel_data)
@@ -67,6 +49,44 @@ function nonzero_1d_data(voxel_data)
     # we seemingly need Float64s to make Gadfly happy
     data_float64 = map((x)-> convert(Float64, x), nonzero_data);
 end
+
+# takes a {} vector of mri data vectors
+# and a tuple/vector of corresponding labels as inputs
+# outputs a Gadfly plot with a histogram overlay of
+# the different brain intensity values
+function nonzero_overlay_histogram(brains, labels)
+    all_intensities = []
+    all_labels = []
+    for i = 1:length(labels)
+        brain_1d = nonzero_1d_data(brains[i]);
+        all_intensities = vcat(all_intensities, brain_1d)
+        all_labels = vcat(all_labels, [labels[i] for _ in brain_1d])
+    end
+
+    df = DataFrame(Intensity = all_intensities, Label = all_labels)
+    plot(df, x="Intensity", color="Label",
+         Geom.histogram(bincount=10),
+         Guide.xlabel("Intensity"), Guide.ylabel("Voxel Count"))
+end
+
+
+
+
+##
+## THE ACTUAL INTERACTIVE SESSION FOLLOWS:
+##
+
+T1_data = normalized_niread("samples/NC_03_T1.nii");
+
+# size(T1_data)
+
+display_brain_centers(T1_data);
+
+brain_mask_data = convert(Array{Uint8}, normalized_niread("samples/NC_03_mask_brain.nii"));
+
+# Mask T1 to only include the brain
+T1_brain_masked = masked_brain(T1_data, brain_mask_data);
+canvas = display_brain_centers(T1_brain_masked);
 
 T1_brain_1D = nonzero_1d_data(T1_brain_masked);
 
@@ -84,23 +104,6 @@ mask_array = {gm_mask_data, wm_mask_data, csf_mask_data};
 
 T1_masked_brains = map((mask_data)-> masked_brain(T1_data, mask_data),
                        mask_array);
-
-function nonzero_overlay_histogram(brains, labels)
-    # takes a {} vector of mri data vectors
-    # and a tuple/vector of corresponding labels as inputs
-    all_intensities = []
-    all_labels = []
-    for i = 1:length(labels)
-        brain_1d = nonzero_1d_data(brains[i]);
-        all_intensities = vcat(all_intensities, brain_1d)
-        all_labels = vcat(all_labels, [labels[i] for _ in brain_1d])
-    end
-
-    df = DataFrame(Intensity = all_intensities, Label = all_labels)
-    plot(df, x="Intensity", color="Label",
-         Geom.histogram(bincount=10),
-         Guide.xlabel("Intensity"), Guide.ylabel("Voxel Count"))
-end
 
 p_t1 = nonzero_overlay_histogram(T1_masked_brains, mask_titles)
 
@@ -122,6 +125,9 @@ FLAIR_masked_brains = map((mask_data)-> masked_brain(FLAIR_data, mask_data),
 
 p_flair = nonzero_overlay_histogram(FLAIR_masked_brains, mask_titles)
 
+
+# Now that we've tried all three image types, let's take a closer look
+# at the T2 CSF data...
 t2_csf = T2_masked_brains[3];
 t2_nonzero_csf = nonzero_1d_data(t2_csf);
 plot(x=t2_nonzero_csf, Geom.histogram(bincount=10));
@@ -132,63 +138,21 @@ plot(x=t2_nonzero_csf, Geom.histogram(bincount=10));
 #std(t2_nonzero_csf)
 
 t2_size = size(T2_data);
+#prepare an empty voxel grid to place the ventricle volume
 ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
+# 0.6 seems like a decent intensity threshold for isolating CSF:
 ventricle_mask[T2_data .> 0.6] = 1;
 
-function write_binvox(voxel_model, fname)
-    # takes a 3d array of binary voxel data and a filename as input
-    fp = open(fname, "w")
-
-    voxel_model_xzy = permutedims(voxel_model, [1,3,2]);
-
-    vsize = size(voxel_model_xzy)
-    voxels_flat = vec(voxel_model_xzy)
-
-    write(fp, "#binvox 1\n")
-    write(fp, "dim $(vsize[1]) $(vsize[2]) $(vsize[3])\n")
-    write(fp, "translate 0 0 0\n")
-    write(fp, "scale 1\n")
-    write(fp, "data\n")
-
-    state = voxels_flat[1]
-    ctr = 0
-    for c in voxels_flat
-        if c == state
-            ctr += 1
-            if ctr == 255
-                write(fp, uint8(state))
-                write(fp, uint8(ctr))
-                ctr = 0
-            end
-        else
-            write(fp, uint8(state))
-            write(fp, uint8(ctr))
-            state = c
-            ctr = 1
-        end
-    end
-    if ctr > 0
-        write(fp, uint8(state))
-        write(fp, uint8(ctr))
-    end
-
-    close(fp)
-end
-
-#test_cube = ones(Uint8, 64, 64, 64)
-#make a file from ventricle_mask, then call viewvox
+#make a file from ventricle_mask:
 write_binvox(ventricle_mask, "ventricle.binvox");
-#run(`./viewvox ventricle1.binvox`)
+#then call viewvox:
+#view_binvox('ventricle1.binvox')
 
-#I should make a dataframe with columns for intensity and mask type
-#Then plot x="Intensity", color="Mask"
+#example of an interactive image (grey matter from T1)
+T1_masked_im = grayim(T1_masked_brains[1]);
+display(T1_masked_im, pixelspacing=[1,1])
 
-T1_masked_im = grayim(T1_masked);
-#erode(T1_masked_im)
-#dilate(T1_masked_im)
-#label_components(T1_masked_im)...
-
-#opening = erode -> dilate
+#opening(x) = dilate(erode(x))
 opened_mask = opening(ventricle_mask);
 write_binvox(opened_mask, "opened.binvox");
 
@@ -203,7 +167,7 @@ edges, region_counts = hist(vec(connected_components), 1:13);
 sorted_regions = sort(region_counts, rev=true);
 
 # the two largest regions should correspond to the ventricles!
-# aww, shucks, it turns on that the first one was bogus...
+# aww, shucks, it turns on that the first one was bogus, so we use 2 and 3...
 first_region = findfirst(region_counts, sorted_regions[2]);
 second_region = findfirst(region_counts, sorted_regions[3]);
 
@@ -217,5 +181,5 @@ write_binvox(hollowed_brain, "hollowed_brain.binvox");
 
 write_binvox(refined_ventricle_mask, "ventricle_refined.binvox");
 
-#mesh = isosurface(binary_brain_mask, 0x01, 0x00);
-#exportToStl(mesh, "test.stl");
+mesh = isosurface(hollowed_brain, 0x01, 0x00);
+exportToStl(mesh, "hollowed_brain.stl");
