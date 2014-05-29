@@ -1,12 +1,16 @@
 module Binvox
 
-export write_binvox, view_binvox
+import Base: display
+
+export write_binvox, view_binvox, display_voxels
+
+typealias VoxelArray Array{Uint8, 3}
 
 # takes a 3d array of binary voxel data and a filename as input
 # writes the result as a binvox file
 # (code based on: https://github.com/dimatura/binvox-rw-py)
 # returns the filename for chaining convenience
-function write_binvox(voxel_model::Array{Uint8,3}, fname::String)
+function write_binvox(voxel_model::VoxelArray, fname::String)
     fp = open(fname, "w")
 
     voxel_model_xzy = permutedims(voxel_model, [1,3,2])
@@ -48,6 +52,42 @@ end
 
 function view_binvox(fname)
   run(`viewvox $(fname)`)
+end
+
+
+# Fancy IJulia inline voxel plotting code
+
+const three_js = readall(joinpath(dirname(Base.source_path()), "js/three.min.js"))
+const voxel_js = readall(joinpath(dirname(Base.source_path()), "js/voxel.js"))
+const voxel_scripts = """<script type="text/javascript" charset="utf-8">
+                          $(three_js)
+                          $(voxel_js)
+                         </script>"""
+
+function prepare_display(d::Display)
+    display(d, "text/html", voxel_scripts)
+end
+
+function prepare_display()
+    prepare_display(Base.Multimedia.displays[end])
+end
+
+
+try
+    display("text/html", voxel_scripts)
+catch
+end
+
+canvas_count = 0
+
+function display_voxels(voxel_model::VoxelArray)
+  global canvas_count
+  canvas_id = "voxel$(canvas_count)"
+  display("text/html", """<div id="$(canvas_id)"></canvas>
+                          <script charset="utf-8">
+                          VoxelGrid("$(canvas_id)", [10,10,10], [0]);
+                          </script>""")
+  canvas_count += 1
 end
 
 end
