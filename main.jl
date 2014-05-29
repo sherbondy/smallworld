@@ -1,5 +1,4 @@
 # this is intended to be run interactively!
-
 using Binvox
 using NIfTI
 using ImageView, Images
@@ -54,7 +53,7 @@ end
 # and a tuple/vector of corresponding labels as inputs
 # outputs a Gadfly plot with a histogram overlay of
 # the different brain intensity values
-function nonzero_overlay_histogram(brains, labels)
+function nonzero_overlay_histogram(brains, labels, bincount=10)
     all_intensities = []
     all_labels = []
     for i = 1:length(labels)
@@ -65,7 +64,7 @@ function nonzero_overlay_histogram(brains, labels)
 
     df = DataFrame(Intensity = all_intensities, Label = all_labels)
     plot(df, x="Intensity", color="Label",
-         Geom.histogram(bincount=10),
+         Geom.histogram(bincount=bincount),
          Guide.xlabel("Intensity"), Guide.ylabel("Voxel Count"))
 end
 
@@ -86,7 +85,8 @@ brain_mask_data = convert(Array{Uint8}, normalized_niread("samples/NC_03_mask_br
 
 # Mask T1 to only include the brain
 T1_brain_masked = masked_brain(T1_data, brain_mask_data);
-canvas = display_brain_centers(T1_brain_masked);
+display_brain_centers(T1_brain_masked);
+
 
 T1_brain_1D = nonzero_1d_data(T1_brain_masked);
 
@@ -107,6 +107,9 @@ T1_masked_brains = map((mask_data)-> masked_brain(T1_data, mask_data),
 
 p_t1 = nonzero_overlay_histogram(T1_masked_brains, mask_titles)
 
+#example of an interactive image (grey matter from T1)
+T1_masked_im = grayim(T1_masked_brains[1]);
+display(T1_masked_im, pixelspacing=[1,1])
 
 #T2
 
@@ -147,10 +150,6 @@ ventricle_mask[T2_data .> 0.6] = 1;
 write_binvox(ventricle_mask, "ventricle.binvox");
 #then call viewvox:
 #view_binvox('ventricle1.binvox')
-
-#example of an interactive image (grey matter from T1)
-T1_masked_im = grayim(T1_masked_brains[1]);
-display(T1_masked_im, pixelspacing=[1,1])
 
 #opening(x) = dilate(erode(x))
 opened_mask = opening(ventricle_mask);
