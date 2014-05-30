@@ -32,6 +32,6 @@ julia
 ipython notebook --profile=julia
 ```
 
-6. You can optionally install `viewvox` (Mac OS binary included in the repo) from
+6. You can optionally install a standalone desktop voxel viewer (`viewvox`) from
 [http://www.cs.princeton.edu/~min/viewvox/](the viewvox webpage) if my WebGL
-voxel viewer runs slowly in your browser.
+viewer runs slowly in your browser.
