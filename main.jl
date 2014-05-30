@@ -1,5 +1,5 @@
 # this is intended to be run interactively!
-using Binvox
+using VoxUtil
 using NIfTI
 using ImageView, Images
 using DataFrames
@@ -147,13 +147,13 @@ ventricle_mask = zeros(Uint8, t2_size[1], t2_size[2], t2_size[3]);
 ventricle_mask[T2_data .> 0.6] = 1;
 
 #make a file from ventricle_mask:
-write_binvox(ventricle_mask, "ventricle.binvox");
+write_binvox(ventricle_mask, "binvox/ventricle.binvox");
 #then call viewvox:
-#view_binvox('ventricle1.binvox')
+#view_binvox('binvox/ventricle1.binvox')
 
 #opening(x) = dilate(erode(x))
 opened_mask = opening(ventricle_mask);
-write_binvox(opened_mask, "opened.binvox");
+write_binvox(opened_mask, "binvox/opened.binvox");
 
 # include neighbors and diagonals in connectivity check
 binary_opened_mask = convert(BitArray, opened_mask);
@@ -176,9 +176,9 @@ refined_ventricle_mask[connected_components .== second_region] = 1;
 
 # now we can subtract the ventricles from the original brain mask
 hollowed_brain = brain_mask_data - refined_ventricle_mask;
-write_binvox(hollowed_brain, "hollowed_brain.binvox");
+write_binvox(hollowed_brain, "binvox/hollowed_brain.binvox");
 
-write_binvox(refined_ventricle_mask, "ventricle_refined.binvox");
+write_binvox(refined_ventricle_mask, "binvox/ventricle_refined.binvox");
 
 # finally, for fun, use marching cubes to export the brain to an stl file
 mesh = isosurface(hollowed_brain, 0x01, 0x00);
