@@ -1,0 +1,475 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+<title>Julia for Educational Scientific Computing</title>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax:{inlineMath:[['$$$','$$$']]}});</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<p>Ethan Sherbondy</p>
+
+<p>6.UAP, Spring 2014</p>
+
+<p>Advised by Prof. Frédo Durand</p>
+
+<h1>Julia for Educational Scientific Computing</h1>
+
+<p><a href="http://julialang.org/">Julia</a> is a recently developed dynamic programming language for scientific computing. The project was <a href="http://julialang.org/blog/2012/02/why-we-created-julia/">started in 2012</a> as an open source, <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a> alternative to MATLAB. It is an attempt to offer a genuinely free language for scientific computing with performance that rivals conventional compiled languages such as C and FORTRAN. <a href="http://julialang.org/benchmarks/">Existing Benchmarks</a> demonstrate that Julia's performance drastically outstrips MATLAB and other open source alternatives such as Octave and NumPy. But the language does not compromise on expressiveness or ease-of-use.</p>
+
+<p>These characteristics make Julia worthy for consideration to be used as a replacement for MATLAB in undergraduate courses offered at MIT. A recently introduced course, 6.S02, currently mandates that students use MATLAB for all 10 of its lab assignments.</p>
+
+<p>6.S02 is a <a href="http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02">Medical Technology</a> variant of MIT's introductory Digital Communication Systems course. While 6.S02 gives students hands-on exposure to powerful ideas such as signal processing using Fourier analysis, medical imaging, machine vision, and basic machine learning techniques, the current dependency on MATLAB seems antithetical to the course's implicit aim of empowering students with knowledge. MATLAB is a closed-source, commercial piece of software that <a href="http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&amp;prodcode=ML">retails for $2150</a> for non-student users.</p>
+
+<p>By choosing to use MATLAB as the primary medium of expressing ideas in the classroom, we are actively breeding a dependence on closed-source tools. If, say, a student is curious about how the <a href="https://www.youtube.com/watch?v=1iBLaHGL1AM">Fast Fourier Transform</a> is actually implemented, MATLAB provides no outlet for this curiosity.</p>
+
+<p>The current use of MATLAB is understandable: it is a dependable, familiar tool to the research community. But as the course evolves, it is worthwhile and even imperative to consider the growing landscape of powerful open source alternatives. This investigation focuses on the feasability of using Julia to systematically replace MATLAB in 6.S02.</p>
+
+<p>What follows is an in-depth case study that demonstrates the practicality of porting one of the most computationally intensive assignments from the class: <a href="https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf">Machine Vision Lab 1</a> (requires Stellar access). This lab introduces students to tomography, segmentation through histogram analysis, morphological operations, and connected-component analysis.</p>
+
+<p>I hope to convey that all of these operations are already possible to perform in Julia using community-provided open source packages. Surprisingly, considering the language's age, the end result is a computing toolkit which is arguably substantially more robust and extensible.</p>
+
+<p><a href="https://github.com/sherbondy/smallworld">The entire source code for my project can be found on Github</a>.</p>
+
+<h1>Initial Setup</h1>
+
+<h2>Julia Language</h2>
+
+<p><a href="http://julialang.org/downloads/">The latest stable Julia release</a> is offered as a precompiled binary for all major platforms (Windows, Mac OS X, and Linux). On all platforms, the total file size is under 50MB to download Julia, compared with the 1GB minimum for a bare-bones MATLAB installation. This makes Julia far more practical for students to install and use on their personal computers.</p>
+
+<h2>Modules</h2>
+
+<p>Unlike MATLAB, Julia's libraries do not come preinstalled as a monolithic bundle. But Julia already provides a comprehensive package management tool for installing dependencies. My port of the Machine Vision lab depends on a total of seven <a href="http://docs.julialang.org/en/latest/packages/packagelist/">community-provided packages</a>, enumerated below:</p>
+
+<pre><code>IJulia
+NIfTI
+Meshes
+Images
+ImageView
+Gadfly
+DataFrames
+</code></pre>
+
+<p>This modular approach does not incur any additional overhead for the student. Instructors can trivially install the required modules simply by typing <code>Pkg.resolve()</code> from the Julia command prompt, and the package manager will resolve the dependencies, automatically downloading any missing modules from the web.</p>
+
+<p>Because Julia has a comprehensive package management solution, instructors could even prepare their own modules for distribution on the web. Currently, the course instructors distribute the required MATLAB code via Stellar in zip archives. This is a cumbersome setup for a software-intensive course. Whenever a revision is made to one of the instructor's bespoke functions (i.e. in the inevitable event that a bug is discovered), students are forced to manually fetch and unzip the latest version. Julia's package manager, on the other hand, offers students a single, automatic means of grabbing the latest version of an assignemnt with a few keystrokes. And it also offers instructors a means to distribute updates with minimal effort.</p>
+
+<h2>IDE</h2>
+
+<p>This is an weak point and an ongoing effort for the Julia project. MATLAB offers a full integrated development environment, complete with an interactive debugger and visual tools for inspecting the variables in the user's current workspace. While multiple conventional desktop offerings exist that provide the majority of an IDE experience, such as <a href="http://forio.com/products/julia-studio/">JuliaStudio</a> or <a href="https://github.com/tknopp/Julietta.jl">Julietta</a>, these tools are still in their infancy.</p>
+
+<p>Nonetheless, Julia offers a powerful default alternative to conventional desktop IDEs in the form of <a href="https://github.com/JuliaLang/IJulia.jl">IJulia</a>, a browser-based interactive notebook-style development tool which builds atop the extensive work done on the IPython project. This tool allows students to do interactive development. It provides autocomplete and inline graphics functionality. Plotting can be done entirely through this interface, and interactive versions of these plots can be shared via the web. This means that course instructors can simply send their students a link to further elucidate a concept from lecture or to enhance labs beyond their current, static PDF format. <a href="http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb">Here is an example</a> which shows off the rich formatting capabilities of IJulia notebooks, with inline plotting, math, and the likes.</p>
+
+<p>Later parts of the Machine Vision lab depend on the 3D isosurface plotting capabilities of MATLAB so that students can visualize voxel images of their intermediate segmentation results. When I started this project, Julia had no equivalent 3D plotting tool. But because IJulia exists in the Web Browser, I was able to quickly develop a prototype, WebGL-based voxel image viewer. You can see an interactive, online <a href="http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb">demonstration of the tool here</a>.</p>
+
+<p><img src="voxel_viewer.png" alt="Voxel Viewer" /></p>
+
+<p>This sort of notebook-style development environment encourages students to actively explore and tinker with the underlying algorithms. And the tooling here can only improve over the coming years.</p>
+
+<h1>Machine Vision Lab</h1>
+
+<p>A complete notebook of the entire lab code can be found here: <a href="http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Machine%20Vision%201.ipynb">http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Machine%20Vision%201.ipynb</a></p>
+
+<p>Our overall goal for the lab is to come up with a simple way to do segmentation to separate out the ventricles in the brain from the rest of the brain anatomy. We rely on the fact that the ventricles are <a href="http://emedicine.medscape.com/article/1923254-overview">contiguous regions filled with Cerebrospinal Fluid</a>.</p>
+
+<p>We start by defining three utility functions for dealing with <a href="http://nifti.nimh.nih.gov/">NIfTI</a> volume images. The heavy-lifting of interpretting the file format is done by the <a href="https://github.com/simonster/NIfTI.jl">NIfTI.jl</a> package.</p>
+
+<p><code>normalized_niread</code> takes the raw x,y,z intensity data from a NIfTI file and normalizes it
+so that each intensity value is in the range <code>[0,1]</code>.</p>
+
+<p><code>display_brain_centers</code> helps the user to get an at-a-glance view of the volume by displaying three images, each a cross-sectional slice from the saggital, coronal, and transverse planes. This takes advantage of Julia's powerful <a href="https://github.com/timholy/ImageView.jl">ImageView.jl</a> package.</p>
+
+<p><img src="t1_brain_centers.png" alt="Display Brain Centers in action" /></p>
+
+<p>After defining our helper functions, we proceed to loading the T1-weighted sample brain image. This is one of three provided volumes (T1, T2, and FLAIR) which correspond to the same brain imaged using <a href="http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm">three distinct popular MRI contrast techniques</a>.</p>
+
+<p>We then load a volume mask which was created by an expert to separate out the brain from the surrounding skull. We apply this mask to the T1 data to display just the brain:</p>
+
+<p><img src="t1_masked_brain_centers.png" alt="Masked version of Display Brain Centers on T1" /></p>
+
+<p>After masking the brain from the T1 image, we use <code>nonzero_1d_data</code> to convert it from a 3D array to a 1-dimensional array with the zero-valued (background) voxels removed. This format allows us to plot a histogram of the distribution of intensity values:</p>
+
+<p><img src="t1_intensity_hist.png" alt="T1 Intensity Histogram" /></p>
+
+<p>This distribution gives us a quick visual understanding of T1 intensity across the whole brain. From here, we proceed by loading handmade masks which isolate Grey Matter (GM), White Matter (WM), and Cerebrospinal Fluid (CSF).</p>
+
+<p>We then make a histogram which overlays the intensity distribution for each type of brain matter for the T1 image, yielding:</p>
+
+<p><img src="t1_overlay_histogram.png" alt="T1 Overlay Histogram" /></p>
+
+<p>This allows us to compare the differences in intensity distribution by brain matter type.
+By defining a helper function, <code>nonzero_overlay_histogram</code>, I can trivially create this type of histogram for T2-weighted images and FLAIR images also. This process helps us to identify that T2-weighted images are our best bet for doing segmentation on Cerebrospinal Fluid (and thus the ventricles) by using simple intensity thresholding:</p>
+
+<p><img src="t2_overlay_histogram.png" alt="T2 Overlay Histogram" /></p>
+
+<p>This histogram shows us that Intensity values above 0.6 are almost exclusively CSF in T2 images. This simple cutoff does not exist for CSF in the other two contrasts. They have a large overlap between CSF and the other tissue types across intensity bins.</p>
+
+<p>Plotting the T2 CSF intensity distribution in isolation and looking at the median intensity helps to assure us that thresholding for intensity values above 0.6 will still let us retain the majority of the CSF:</p>
+
+<p><img src="t2_csf_histogram.png" alt="T2 CSF Histogram" /></p>
+
+<p>Now that we have a method for isolating CSF based on intensity, we can get an initial rough volume image of the ventricles. The result is very noisy. It includes lots of CSF from the periphary of the brain:</p>
+
+<p><img src="ventricle1.png" alt="Initial Ventricle Volume" /></p>
+
+<p>This 3D rendering takes advantage of my interactive browser-based voxel viewer. Since WebGL is a relatively new browser API, I also devised a fallback which depends on the open source desktop application <code>viewvox</code> . <a href="http://www.cs.princeton.edu/~min/viewvox/">Viewvox</a> is an OpenGL voxel viewer. By default, it reads volumes in a custom binary file format called <code>.binvox</code>. In order to make the lab work seamlessly with viewvox, I implemented a simple run-length encoder in Julia to convert standard 3D Julia Arrays into binvox files.</p>
+
+<p>In order to remove the surrounding CSF, we take advantage of <a href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm">morphological operations</a>. These powerful tools help us to eliminate small chunks of CSF from the periphery. A single opening operation, which composes an erode operation with dilation, yields a much cleaner image:</p>
+
+<p><img src="ventricle2.png" alt="Opened Ventricle Volume" /></p>
+
+<p>Unfortunately, there are still small bits of external CSF on the periphary of the volume, detached from the ventricles. In order to remove these from the image without resorting to manual techniques, we turn to connected-component analysis.</p>
+
+<p>The idea here is to interpret the binary volume image as a forest of graphs. By traversing the graphs through neighbor pixels, we can identify how many distinct connected regions exist and sort these regions by size. The intuition is that the largest remaining connected regions will probably be the ventricles.</p>
+
+<p>After identifying the connected regions and combining the largest ones into a single volume, we arrive at our final ventricle volume:</p>
+
+<p><img src="ventricle3.png" alt="Final Refined Ventricle Volume" /></p>
+
+<p>For fun, I tried 3D printing a physical model of the brain from the voxel data provided. In order to do this, I used the <a href="http://paulbourke.net/geometry/polygonise/">marching cubes algorithm</a> in order to conver the voxel image into a triangular mesh. I then exported this mesh as an STL file and used PreForm, the desktop software for the Form1 3D printer, to fabricate the physical model:</p>
+
+<p><img src="preform_brain.png" alt="PreForm Import Brain" /></p>
+
+<p>This was all possible because Julia has a thriving library ecosystem, so I was able to find an open-source <a href="https://github.com/loladiro/Meshes.jl">Meshes package</a> which included an STL exporter and marching tetrahedra implementation.</p>
+
+<p><img src="brain1.jpg" alt="3D-printed Brain" />
+<img src="brain2.jpg" alt="3D-printed Brain 2" /></p>
+
+<h1>Postmortem</h1>
+
+<p>Overall, I was very impressed by how well-suited the Julia ecosystem is to the sort of scientific computing introduced in 6.S02. The language and community-provided packages seem like an effective fit for a future iteration of the course. I hope to further extend my voxel viewer to provide better performance and more visual feedback (unit markers and individual-voxel highlighting/selections).</p>
+
+<p>Even if the 6.S02 staff deem Julia to be too immature a language or unreasonable on other grounds, I sincerely hope that they consider reconfiguring the software component of the course to use an open source stack. Octave or Python may be other avenues worthy of future exploration.</p>
+
+<h1>Links</h1>
+
+<p>(In order of appearance)</p>
+
+<ul>
+<li>http://julialang.org/blog/2012/02/why-we-created-julia/ Why We Created Julia</li>
+<li>http://www.gnu.org/copyleft/gpl.html</li>
+<li>http://julialang.org/benchmarks/</li>
+<li>http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02</li>
+<li>http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&amp;prodcode=ML</li>
+<li>https://www.youtube.com/watch?v=1iBLaHGL1AM</li>
+<li>https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf</li>
+<li>https://github.com/sherbondy/smallworld</li>
+<li>http://julialang.org/downloads/</li>
+<li>http://docs.julialang.org/en/latest/packages/packagelist/</li>
+<li>http://forio.com/products/julia-studio/</li>
+<li>https://github.com/tknopp/Julietta.jl</li>
+<li>https://github.com/JuliaLang/IJulia.jl</li>
+<li>http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb</li>
+<li>http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb</li>
+<li>http://emedicine.medscape.com/article/1923254-overview</li>
+<li>http://nifti.nimh.nih.gov/</li>
+<li>https://github.com/simonster/NIfTI.jl</li>
+<li>https://github.com/timholy/ImageView.jl</li>
+<li>http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm</li>
+<li>http://www.cs.princeton.edu/~min/viewvox/</li>
+<li>https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm</li>
+<li>http://paulbourke.net/geometry/polygonise/</li>
+<li>https://github.com/loladiro/Meshes.jl</li>
+</ul>
+
+</body>
+</html>
