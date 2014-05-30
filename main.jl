@@ -161,7 +161,7 @@ binary_opened_mask = convert(BitArray, opened_mask);
 connectivity = trues(3,3,3);
 connected_components = label_components(binary_opened_mask, connectivity);
 region_count = maximum(connected_components);
-edges, region_counts = hist(vec(connected_components), 1:13);
+edges, region_counts = hist(vec(connected_components), 1:region_count);
 
 sorted_regions = sort(region_counts, rev=true);
 

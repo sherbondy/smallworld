@@ -21,7 +21,7 @@ function VoxelGrid(container_id, grid_dimensions, voxel_values)
       container = document.getElementById(container_id);
 
       camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, max_dim*100);
-      camera.position.z = max_dim*5;
+      camera.position.z = max_dim*2;
 
       controls = new THREE.TrackballControls( camera );
       controls.enabled = false;
