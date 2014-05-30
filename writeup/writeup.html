@@ -314,31 +314,31 @@ sup {
 
 <h1>Julia for Educational Scientific Computing</h1>
 
-<p><a href="http://julialang.org/">Julia</a> is a recently-developed dynamic programming language for scientific computing. The project was <a href="http://julialang.org/blog/2012/02/why-we-created-julia/">started in 2012</a> as an open source, <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a> alternative to MATLAB. It is an attempt to offer a genuinely free language for scientific computing with performance that rivals conventional compiled languages such as C and FORTRAN. <a href="http://julialang.org/benchmarks/">Existing Benchmarks</a> demonstrate that Julia's performance drastically outstrips MATLAB and other open source alternatives such as Octave and NumPy. But the language does not compromise on expressiveness or ease-of-use.</p>
+<p><a href="http://julialang.org/">Julia</a> is a recently-developed dynamic programming language for scientific computing. The project was <a href="http://julialang.org/blog/2012/02/why-we-created-julia/" title="Why We Created Julia">started in 2012</a> as an open source, <a href="http://www.gnu.org/copyleft/gpl.html" title="GPL">GPL</a> alternative to MATLAB. It is an attempt to offer a genuinely free language for scientific computing with performance that rivals conventional compiled languages such as C and FORTRAN. <a href="http://julialang.org/benchmarks/" title="Julia Benchmarks">Existing Benchmarks</a> demonstrate that Julia's performance drastically outstrips MATLAB and other open source alternatives such as Octave and NumPy. But the language does not compromise on expressiveness or ease-of-use.</p>
 
 <p>These characteristics make Julia worthy for consideration to be used as a replacement for MATLAB in undergraduate courses offered at MIT. A recently introduced course, 6.S02, currently mandates that students use MATLAB for all 10 of its lab assignments.</p>
 
-<p>6.S02 is a <a href="http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02">Medical Technology</a> variant of MIT's introductory Digital Communication Systems course. While 6.S02 gives students hands-on exposure to powerful ideas such as signal processing using Fourier analysis, medical imaging, machine vision, and basic machine learning techniques, the current dependency on MATLAB seems antithetical to the course's implicit aim of empowering students with knowledge. MATLAB is a closed-source, commercial piece of software that <a href="http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&amp;prodcode=ML">retails for $2150</a> for non-student users.</p>
+<p>6.S02 is a <a href="http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02" title="6.S02 Subject Description">Medical Technology</a> variant of MIT's introductory Digital Communication Systems course. While 6.S02 gives students hands-on exposure to powerful ideas such as signal processing using Fourier analysis, medical imaging, machine vision, and basic machine learning techniques, the current dependency on MATLAB seems antithetical to the course's implicit aim of empowering students with knowledge. MATLAB is a closed-source, commercial piece of software that <a href="http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&amp;prodcode=ML" title="MATLAB Pricing">retails for $2150</a> for non-student users.</p>
 
-<p>By choosing to use MATLAB as the primary medium of expressing ideas in the classroom, we are actively breeding a dependence on closed-source tools. If, say, a student is curious about how the <a href="https://www.youtube.com/watch?v=1iBLaHGL1AM">Fast Fourier Transform</a> is actually implemented, MATLAB provides no outlet for this curiosity.</p>
+<p>By choosing to use MATLAB as the primary medium of expressing ideas in the classroom, we are actively breeding a dependence on closed-source tools. If, say, a student is curious about how the <a href="https://www.youtube.com/watch?v=1iBLaHGL1AM" title="FFT in Julia">Fast Fourier Transform</a> is actually implemented, MATLAB provides no outlet for this curiosity.</p>
 
 <p>The current use of MATLAB is understandable: it is a dependable, familiar tool to the research community. But as the course evolves, it is worthwhile and even imperative to consider the growing landscape of powerful open source alternatives. This investigation focuses on the feasability of using Julia to systematically replace MATLAB in 6.S02.</p>
 
-<p>What follows is an in-depth case study that demonstrates the practicality of porting one of the most computationally intensive assignments from the class: <a href="https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf">Machine Vision Lab 1</a> (requires Stellar access). This lab introduces students to tomography, segmentation through histogram analysis, morphological operations, and connected-component analysis.</p>
+<p>What follows is an in-depth case study that demonstrates the practicality of porting one of the most computationally intensive assignments from the class: <a href="https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf" title="6.S02 Machine Vision Lab 1">Machine Vision Lab 1</a> (requires Stellar access). This lab introduces students to tomography, segmentation through histogram analysis, morphological operations, and connected-component analysis.</p>
 
 <p>I hope to convey that all of these operations are already possible to perform in Julia using community-provided open source packages. Surprisingly, considering the language's age, the end result is a computing toolkit which is arguably substantially more robust and extensible.</p>
 
-<p><a href="https://github.com/sherbondy/smallworld">The entire source code for my project can be found on Github</a>.</p>
+<p><a href="https://github.com/sherbondy/smallworld" title="This project on GitHub">The entire source code for my project can be found on Github</a>.</p>
 
 <h1>Initial Setup</h1>
 
 <h2>Julia Language</h2>
 
-<p><a href="http://julialang.org/downloads/">The latest stable Julia release</a> is offered as a precompiled binary for all major platforms (Windows, Mac OS X, and Linux). On all platforms, the total file size is under 50MB to download Julia, compared with the 1GB minimum for a bare-bones MATLAB installation. This makes Julia far more practical for students to install and use on their personal computers.</p>
+<p><a href="http://julialang.org/downloads/" title="Julia Download Page">The latest stable Julia release</a> is offered as a precompiled binary for all major platforms (Windows, Mac OS X, and Linux). On all platforms, the total file size is under 50MB to download Julia, compared with the 1GB minimum for a bare-bones MATLAB installation. This makes Julia far more practical for students to install and use on their personal computers.</p>
 
 <h2>Modules</h2>
 
-<p>Unlike MATLAB, Julia's libraries do not come preinstalled as a monolithic bundle. But Julia already provides a comprehensive package management tool for installing dependencies. My port of the Machine Vision lab depends on a total of seven <a href="http://docs.julialang.org/en/latest/packages/packagelist/">community-provided packages</a>, enumerated below:</p>
+<p>Unlike MATLAB, Julia's libraries do not come preinstalled as a monolithic bundle. But Julia already provides a comprehensive package management tool for installing dependencies. My port of the Machine Vision lab depends on a total of seven <a href="http://docs.julialang.org/en/latest/packages/packagelist/" title="Julia Package Repository">community-provided packages</a>, enumerated below:</p>
 
 <pre><code>IJulia
 NIfTI
@@ -355,11 +355,11 @@ DataFrames
 
 <h2>IDE</h2>
 
-<p>This is an weak point and an ongoing effort for the Julia project. MATLAB offers a full integrated development environment, complete with an interactive debugger and visual tools for inspecting the variables in the user's current workspace. While multiple conventional desktop offerings exist that provide the majority of an IDE experience, such as <a href="http://forio.com/products/julia-studio/">JuliaStudio</a> or <a href="https://github.com/tknopp/Julietta.jl">Julietta</a>, these tools are still in their infancy.</p>
+<p>This is an weak point and an ongoing effort for the Julia project. MATLAB offers a full integrated development environment, complete with an interactive debugger and visual tools for inspecting the variables in the user's current workspace. While multiple conventional desktop offerings exist that provide the majority of an IDE experience, such as <a href="http://forio.com/products/julia-studio/" title="JuliaStudio">JuliaStudio</a> or <a href="https://github.com/tknopp/Julietta.jl" title="Julietta IDE">Julietta</a>, these tools are still in their infancy.</p>
 
-<p>Nonetheless, Julia offers a powerful default alternative to conventional desktop IDEs in the form of <a href="https://github.com/JuliaLang/IJulia.jl">IJulia</a>, a browser-based interactive notebook-style development tool which builds atop the extensive work done on the IPython project. This tool allows students to do interactive development. It provides autocomplete and inline graphics functionality. Plotting can be done entirely through this interface, and interactive versions of these plots can be shared via the web. This means that course instructors can simply send their students a link to further elucidate a concept from lecture or to enhance labs beyond their current, static PDF format. <a href="http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb">Here is an example</a> which shows off the rich formatting capabilities of IJulia notebooks, with inline plotting, math, and the likes.</p>
+<p>Nonetheless, Julia offers a powerful default alternative to conventional desktop IDEs in the form of <a href="https://github.com/JuliaLang/IJulia.jl" title="IJulia">IJulia</a>, a browser-based interactive notebook-style development tool which builds atop the extensive work done on the IPython project. This tool allows students to do interactive development. It provides autocomplete and inline graphics functionality. Plotting can be done entirely through this interface, and interactive versions of these plots can be shared via the web. This means that course instructors can simply send their students a link to further elucidate a concept from lecture or to enhance labs beyond their current, static PDF format. <a href="http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb" title="IJulia Notebook Example">Here is an example</a> which shows off the rich formatting capabilities of IJulia notebooks, with inline plotting, math, and the likes.</p>
 
-<p>Later parts of the Machine Vision lab depend on the 3D isosurface plotting capabilities of MATLAB so that students can visualize voxel images of their intermediate segmentation results. When I started this project, Julia had no equivalent 3D plotting tool. But because IJulia exists in the Web Browser, I was able to quickly develop a prototype, WebGL-based voxel image viewer. You can see an interactive, online <a href="http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb">demonstration of the tool here</a>.</p>
+<p>Later parts of the Machine Vision lab depend on the 3D isosurface plotting capabilities of MATLAB so that students can visualize voxel images of their intermediate segmentation results. When I started this project, Julia had no equivalent 3D plotting tool. But because IJulia exists in the Web Browser, I was able to quickly develop a prototype, WebGL-based voxel image viewer. You can see an interactive, online <a href="http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb" title="WebGL Voxel Viewer Example">demonstration of the tool here</a>.</p>
 
 <p><img src="voxel_viewer.png" alt="Voxel Viewer" /></p>
 
@@ -369,18 +369,18 @@ DataFrames
 
 <p>A complete notebook of the entire lab code can be found here: <a href="http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Machine%20Vision%201.ipynb">http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Machine%20Vision%201.ipynb</a></p>
 
-<p>Our overall goal for the lab is to come up with a simple way to do segmentation to separate out the ventricles in the brain from the rest of the brain anatomy. We rely on the fact that the ventricles are <a href="http://emedicine.medscape.com/article/1923254-overview">contiguous regions filled with Cerebrospinal Fluid</a>.</p>
+<p>Our overall goal for the lab is to come up with a simple way to do segmentation to separate out the ventricles in the brain from the rest of the brain anatomy. We rely on the fact that the ventricles are <a href="http://emedicine.medscape.com/article/1923254-overview" title="Ventricles of the Brain">contiguous regions filled with Cerebrospinal Fluid</a>.</p>
 
-<p>We start by defining three utility functions for dealing with <a href="http://nifti.nimh.nih.gov/">NIfTI</a> volume images. The heavy-lifting of interpretting the file format is done by the <a href="https://github.com/simonster/NIfTI.jl">NIfTI.jl</a> package.</p>
+<p>We start by defining three utility functions for dealing with <a href="http://nifti.nimh.nih.gov/" title="NIfTI File Format">NIfTI</a> volume images. The heavy-lifting of interpretting the file format is done by the <a href="https://github.com/simonster/NIfTI.jl" title="Julia NIfTI Package">NIfTI.jl</a> package.</p>
 
 <p><code>normalized_niread</code> takes the raw x,y,z intensity data from a NIfTI file and normalizes it
 so that each intensity value is in the range <code>[0,1]</code>.</p>
 
-<p><code>display_brain_centers</code> helps the user to get an at-a-glance view of the volume by displaying three images, each a cross-sectional slice from the saggital, coronal, and transverse planes. This takes advantage of Julia's powerful <a href="https://github.com/timholy/ImageView.jl">ImageView.jl</a> package.</p>
+<p><code>display_brain_centers</code> helps the user to get an at-a-glance view of the volume by displaying three images, each a cross-sectional slice from the saggital, coronal, and transverse planes. This takes advantage of Julia's powerful <a href="https://github.com/timholy/ImageView.jl" title="Julia ImageView Package">ImageView.jl</a> package.</p>
 
 <p><img src="t1_brain_centers.png" alt="Display Brain Centers in action" /></p>
 
-<p>After defining our helper functions, we proceed to loading the T1-weighted sample brain image. This is one of three provided volumes (T1, T2, and FLAIR) which correspond to the same brain imaged using <a href="http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm">three distinct popular MRI contrast techniques</a>.</p>
+<p>After defining our helper functions, we proceed to loading the T1-weighted sample brain image. This is one of three provided volumes (T1, T2, and FLAIR) which correspond to the same brain imaged using <a href="http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm" title="BASIC PRINCIPLES OF MR IMAGING">three distinct popular MRI contrast techniques</a>.</p>
 
 <p>We then load a volume mask which was created by an expert to separate out the brain from the surrounding skull. We apply this mask to the T1 data to display just the brain:</p>
 
@@ -411,9 +411,9 @@ By defining a helper function, <code>nonzero_overlay_histogram</code>, I can tri
 
 <p><img src="ventricle1.png" alt="Initial Ventricle Volume" /></p>
 
-<p>This 3D rendering takes advantage of my interactive browser-based voxel viewer. Since WebGL is a relatively new browser API, I also devised a fallback which depends on the open source desktop application <code>viewvox</code> . <a href="http://www.cs.princeton.edu/~min/viewvox/">Viewvox</a> is an OpenGL voxel viewer. By default, it reads volumes in a custom binary file format called <code>.binvox</code>. In order to make the lab work seamlessly with viewvox, I implemented a simple run-length encoder in Julia to convert standard 3D Julia Arrays into binvox files.</p>
+<p>This 3D rendering takes advantage of my interactive browser-based voxel viewer. Since WebGL is a relatively new browser API, I also devised a fallback which depends on the open source desktop application <code>viewvox</code> . <a href="http://www.cs.princeton.edu/~min/viewvox/" title="viewvox: 3D voxel model viewer">Viewvox</a> is an OpenGL voxel viewer. By default, it reads volumes in a custom binary file format called <code>.binvox</code>. In order to make the lab work seamlessly with viewvox, I implemented a simple run-length encoder in Julia to convert standard 3D Julia Arrays into binvox files.</p>
 
-<p>In order to remove the surrounding CSF, we take advantage of <a href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm">morphological operations</a>. These powerful tools help us to eliminate small chunks of CSF from the periphery. A single opening operation, which composes an erode operation with dilation, yields a much cleaner image:</p>
+<p>In order to remove the surrounding CSF, we take advantage of <a href="https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm" title="Morphological Image Processing">morphological operations</a>. These powerful tools help us to eliminate small chunks of CSF from the periphery. A single opening operation, which composes an erode operation with dilation, yields a much cleaner image:</p>
 
 <p><img src="ventricle2.png" alt="Opened Ventricle Volume" /></p>
 
@@ -425,11 +425,11 @@ By defining a helper function, <code>nonzero_overlay_histogram</code>, I can tri
 
 <p><img src="ventricle3.png" alt="Final Refined Ventricle Volume" /></p>
 
-<p>For fun, I tried 3D printing a physical model of the brain from the voxel data provided. In order to do this, I used the <a href="http://paulbourke.net/geometry/polygonise/">marching cubes algorithm</a> in order to conver the voxel image into a triangular mesh. I then exported this mesh as an STL file and used PreForm, the desktop software for the Form1 3D printer, to fabricate the physical model:</p>
+<p>For fun, I tried 3D printing a physical model of the brain from the voxel data provided. In order to do this, I used the <a href="http://paulbourke.net/geometry/polygonise/" title="Polygonising a scalar field">marching cubes algorithm</a> in order to conver the voxel image into a triangular mesh. I then exported this mesh as an STL file and used PreForm, the desktop software for the Form1 3D printer, to fabricate the physical model:</p>
 
 <p><img src="preform_brain.png" alt="PreForm Import Brain" /></p>
 
-<p>This was all possible because Julia has a thriving library ecosystem, so I was able to find an open-source <a href="https://github.com/loladiro/Meshes.jl">Meshes package</a> which included an STL exporter and marching tetrahedra implementation.</p>
+<p>This was all possible because Julia has a thriving library ecosystem, so I was able to find an open-source <a href="https://github.com/loladiro/Meshes.jl" title="Julia Meshes Package">Meshes package</a> which included an STL exporter and marching tetrahedra implementation.</p>
 
 <p><img src="brain1.jpg" alt="3D-printed Brain" />
 <img src="brain2.jpg" alt="3D-printed Brain 2" /></p>
@@ -445,7 +445,7 @@ By defining a helper function, <code>nonzero_overlay_histogram</code>, I can tri
 <p>(In order of appearance)</p>
 
 <ul>
-<li>http://julialang.org/blog/2012/02/why-we-created-julia/ Why We Created Julia</li>
+<li>http://julialang.org/blog/2012/02/why-we-created-julia/</li>
 <li>http://www.gnu.org/copyleft/gpl.html</li>
 <li>http://julialang.org/benchmarks/</li>
 <li>http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02</li>

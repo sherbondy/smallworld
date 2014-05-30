@@ -136,7 +136,7 @@ Even if the 6.S02 staff deem Julia to be too immature a language or unreasonable
 # Links
 (In order of appearance)
 
-- http://julialang.org/blog/2012/02/why-we-created-julia/ Why We Created Julia
+- http://julialang.org/blog/2012/02/why-we-created-julia/
 - http://www.gnu.org/copyleft/gpl.html
 - http://julialang.org/benchmarks/
 - http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02
@@ -161,27 +161,27 @@ Even if the 6.S02 staff deem Julia to be too immature a language or unreasonable
 - http://paulbourke.net/geometry/polygonise/
 - https://github.com/loladiro/Meshes.jl
 
-[1]: http://julialang.org/blog/2012/02/why-we-created-julia/ Why We Created Julia
-[2]: http://www.gnu.org/copyleft/gpl.html GPL
-[3]: http://julialang.org/benchmarks/ Julia Benchmarks
-[4]: http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02 6.s02 Subject Description 
-[5]: http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&prodcode=ML MATLAB Pricing
-[6]: https://www.youtube.com/watch?v=1iBLaHGL1AM FFT in Julia
-[7]: https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf 6.s02 Machine Vision Lab
-[8]: https://github.com/sherbondy/smallworld My Project on GitHub
-[9]: http://julialang.org/downloads/ Julia Download Page
-[10]: http://docs.julialang.org/en/latest/packages/packagelist/ Julia Package Repository
-[11]: http://forio.com/products/julia-studio/ JuliaStudio
-[12]: https://github.com/tknopp/Julietta.jl Julietta IDE
-[13]: https://github.com/JuliaLang/IJulia.jl IJulia
-[14]: http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb IJulia Notebook Example
-[15]: http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb WebGL Voxel Viewer Example
-[16]: http://emedicine.medscape.com/article/1923254-overview Ventricles of the Brain
-[17]: http://nifti.nimh.nih.gov/ NIfTI File Format
-[18]: https://github.com/simonster/NIfTI.jl Julia NIfTI Package
-[19]: https://github.com/timholy/ImageView.jl Julia ImageView Package
-[20]: http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm BASIC PRINCIPLES OF MR IMAGING
-[21]: http://www.cs.princeton.edu/~min/viewvox/ viewvox: 3D voxel model viewer
-[22]: https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm Morphological Image Processing
-[23]: http://paulbourke.net/geometry/polygonise/ Polygonising a scalar field
-[24]: https://github.com/loladiro/Meshes.jl Julia Meshes Package
+[1]: http://julialang.org/blog/2012/02/why-we-created-julia/ "Why We Created Julia"
+[2]: http://www.gnu.org/copyleft/gpl.html "GPL"
+[3]: http://julialang.org/benchmarks/ "Julia Benchmarks"
+[4]: http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02 "6.S02 Subject Description"
+[5]: http://www.mathworks.com/pricing-licensing/index.html?intendeduse=comm&prodcode=ML "MATLAB Pricing"
+[6]: https://www.youtube.com/watch?v=1iBLaHGL1AM "FFT in Julia"
+[7]: https://stellar.mit.edu/S/course/6/sp14/6.S02/courseMaterial/homework/assignments/assignment24/assignment/1/Machine_Vision_Lab1_6.S02_2014.pdf "6.S02 Machine Vision Lab 1"
+[8]: https://github.com/sherbondy/smallworld "This project on GitHub"
+[9]: http://julialang.org/downloads/ "Julia Download Page"
+[10]: http://docs.julialang.org/en/latest/packages/packagelist/ "Julia Package Repository"
+[11]: http://forio.com/products/julia-studio/ "JuliaStudio"
+[12]: https://github.com/tknopp/Julietta.jl "Julietta IDE"
+[13]: https://github.com/JuliaLang/IJulia.jl "IJulia"
+[14]: http://nbviewer.ipython.org/url/jdj.mit.edu/~stevenj/IJulia%20Preview.ipynb "IJulia Notebook Example"
+[15]: http://nbviewer.ipython.org/github/sherbondy/smallworld/blob/master/Voxel%20Test.ipynb "WebGL Voxel Viewer Example"
+[16]: http://emedicine.medscape.com/article/1923254-overview "Ventricles of the Brain"
+[17]: http://nifti.nimh.nih.gov/ "NIfTI File Format"
+[18]: https://github.com/simonster/NIfTI.jl "Julia NIfTI Package"
+[19]: https://github.com/timholy/ImageView.jl "Julia ImageView Package"
+[20]: http://spinwarp.ucsd.edu/neuroweb/Text/br-100.htm "BASIC PRINCIPLES OF MR IMAGING"
+[21]: http://www.cs.princeton.edu/~min/viewvox/ "viewvox: 3D voxel model viewer"
+[22]: https://www.cs.auckland.ac.nz/courses/compsci773s1c/lectures/ImageProcessing-html/topic4.htm "Morphological Image Processing"
+[23]: http://paulbourke.net/geometry/polygonise/ "Polygonising a scalar field"
+[24]: https://github.com/loladiro/Meshes.jl "Julia Meshes Package"
