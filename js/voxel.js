@@ -1,10 +1,10 @@
 function VoxelGrid(container_id, grid_dimensions, voxel_values)
 {
   console.log("drawing voxel grid " + container_id);
-  alert("Dimensions "+ grid_dimensions);
 
   var width = 640;
   var height = 480;
+  var aspect_ratio = width / height;
 
   var max_x = grid_dimensions[0];
   var max_y = grid_dimensions[1];
@@ -20,7 +20,7 @@ function VoxelGrid(container_id, grid_dimensions, voxel_values)
   function init() {
       container = document.getElementById(container_id);
 
-      camera = new THREE.PerspectiveCamera(75, width / height, 1, max_dim*100);
+      camera = new THREE.PerspectiveCamera(75, aspect_ratio, 1, max_dim*100);
       camera.position.z = max_dim*5;
 
       controls = new THREE.TrackballControls( camera );
@@ -28,15 +28,16 @@ function VoxelGrid(container_id, grid_dimensions, voxel_values)
 
       scene = new THREE.Scene();
 
+      // coordinate axes
       function v(x,y,z){
         return new THREE.Vertex(new THREE.Vector3(x,y,z));
       }
 
       var lineGeo = new THREE.Geometry();
       lineGeo.vertices.push(
-        v(0, 0, 0), v(max_x, 0, 0),
-        v(0, 0, 0), v(0, max_y, 0),
-        v(0, 0, 0), v(0, 0, max_z)
+        v(0, 0, 0), v(max_dim, 0, 0),
+        v(0, 0, 0), v(0, max_dim, 0),
+        v(0, 0, 0), v(0, 0, max_dim)
       );
       var lineMat = new THREE.LineBasicMaterial({
         color: 0xffffff, lineWidth: 2});
@@ -46,9 +47,18 @@ function VoxelGrid(container_id, grid_dimensions, voxel_values)
 
       geometry = new THREE.Geometry();
       box = new THREE.BoxGeometry(1, 1, 1);
-      material = new THREE.MeshBasicMaterial({
-          color: 0xcccccc,
+      material = new THREE.MeshPhongMaterial({
+        specular: 0xffffff,
+        color: 0xcccccc,
+        emissive: 0x999999
       });
+
+      var ambientLight = new THREE.AmbientLight(0x222222);
+      scene.add(ambientLight);
+
+      var directionalLight = new THREE.DirectionalLight(0xffffff);
+      directionalLight.position.set(0, 2*max_y, 0);
+      scene.add(directionalLight);
 
       for (var x = 0; x < max_x; x+=1) {
         for (var y = 0; y < max_y; y+=1) {
@@ -81,7 +91,6 @@ function VoxelGrid(container_id, grid_dimensions, voxel_values)
   }
 
   function animate() {
-      // note: three.js includes requestAnimationFrame shim
       requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
