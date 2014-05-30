@@ -1,21 +1,37 @@
-#The Small World Made Tangible
+#Julia for Educational Scientific Computing
 
-In this exercise, we:
+Here I demonstrate that Julia is already capable of performing all of the
+functionality necessary for the Machine Vision unit of MIT's
+[6.S02](http://www.eecs.mit.edu/academics-admissions/academic-information/subject-updates-st-2013/6s02) course.
 
-1. take tiny creatures in the world; viruses, insects, plant seeds, etc.
-2. scan them with fancy tools (like SEM or microCT, depending on scale)
-3. distinguish different features from the scans (look inside the things!)
-4. fabricate giant version of the (life)forms using (fancy multi-material) 3D printers!
+This is a fully-operational port of Machine Vision Lab 1 from Spring 2014.
 
-Wow, that sounds like a blast, and we might even learn a thing or two.
-Let's get started.
+You can get started by doing the following:
 
-Because I am crazy, we are going to try using Julia to express our ideas.
+1. Install Julia 0.2 from http://julialang.org.
+2. Clone this project to your computer:
 
-Getting Started:
+```
+git clone http://github.com/sherbondy/smallworld
+```
 
-Let's use ipython notebooks:
+3. In the `smallworld` directory, start up Julia:
+
+```
+julia
+> Pkg.resolve()
+```
+
+`Pkg.resove()` will grab all of the project dependencies.
+
+4. If you don't already have IPython installed, you should [grab it](http://ipython.org/install.html)
+
+5. Now you can launch an IJulia notebook:
 
 ```
 ipython notebook --profile=julia
 ```
+
+6. You can optionally install `viewvox` (Mac OS binary included in the repo) from
+[http://www.cs.princeton.edu/~min/viewvox/](the viewvox webpage) if my WebGL
+voxel viewer runs slowly in your browser.

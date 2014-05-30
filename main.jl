@@ -180,5 +180,6 @@ write_binvox(hollowed_brain, "hollowed_brain.binvox");
 
 write_binvox(refined_ventricle_mask, "ventricle_refined.binvox");
 
+# finally, for fun, use marching cubes to export the brain to an stl file
 mesh = isosurface(hollowed_brain, 0x01, 0x00);
 exportToStl(mesh, "hollowed_brain.stl");
